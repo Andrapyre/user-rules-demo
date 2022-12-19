@@ -41,8 +41,11 @@ We prepared the starter project for you that contains a database connection, CRU
 
 - copy `.env.development` file into `.env`
 - run `npm install` to install the dependencies
+
+- run `npm run build` to build the project
 - run `npm start` to build and start the project
-- run `npm run watch` to start and watch "src" folder
+  or
+- run `npm run watch` to start in dev mode and watch "src" folder
 
 ## Success
 
