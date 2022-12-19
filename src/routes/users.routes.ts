@@ -1,33 +1,38 @@
-import { UsersController } from "@controllers/users.controller";
-import { UserCreateDTO } from "@dtos/UserCreate.dto";
-import { UserUpdateDTO } from "@dtos/UserUpdate.dto";
-import { Routes } from "@interfaces/Routes.interface";
-import validationMiddleware from "@middlewares/validation.middleware";
-import { UsersRepository } from "@repositories/users.repository";
-import { Router } from "express";
+import { UsersController } from "@controllers/users.controller"
+import { UserCreateDTO } from "@dtos/UserCreate.dto"
+import { UserUpdateDTO } from "@dtos/UserUpdate.dto"
+import { Routes } from "@interfaces/Routes.interface"
+import validationMiddleware from "@middlewares/validation.middleware"
+import { UsersRepository } from "@repositories/users.repository"
+import { Router } from "express"
+import { UserEventsListener } from "eventListeners/UserEvents.listener"
 
 export class UsersRoute implements Routes {
-  path = "/users";
-  router = Router();
-  usersController = new UsersController(new UsersRepository());
+  path = "/users"
+  router = Router()
+  usersController: UsersController
 
-  constructor() {
-    this.initializeRoutes();
+  constructor(private eventListener: UserEventsListener) {
+    this.usersController = new UsersController(
+      new UsersRepository(),
+      this.eventListener
+    )
+    this.initializeRoutes()
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, this.usersController.getUsers);
-    this.router.get(`${this.path}/:userId`, this.usersController.getUserById);
+    this.router.get(`${this.path}`, this.usersController.getUsers)
+    this.router.get(`${this.path}/:userId`, this.usersController.getUserById)
     this.router.post(
       `${this.path}`,
       validationMiddleware(UserCreateDTO, "body"),
       this.usersController.createUser
-    );
+    )
     this.router.put(
       `${this.path}/:userId`,
       validationMiddleware(UserUpdateDTO, "body", true),
       this.usersController.updateUser
-    );
-    this.router.delete(`${this.path}/:userId`, this.usersController.deleteUser);
+    )
+    this.router.delete(`${this.path}/:userId`, this.usersController.deleteUser)
   }
 }
