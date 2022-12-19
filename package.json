@@ -9,9 +9,7 @@
     "start": "node ./dist/index.js",
     "watch": "npm run clean && (concurrently \"tsc -w\" \"tsc-alias -w\")",
     "build": "npm run clean && tsc && tsc-alias",
-    "clean": "rimraf ./dist",
-    "lint": "eslint --ignore-path .gitignore --ext .ts src/",
-    "lint:fix": "npm run lint -- --fix"
+    "clean": "rimraf ./dist"
   },
   "devDependencies": {
     "@types/express": "^4.17.15",
