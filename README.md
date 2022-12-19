@@ -10,7 +10,6 @@ In order to complete the task you will need the following:
 
 - code editor of your choice
 - NodeJs installed on your machine
-- MongoDB installed on your machine
 - Postman installed on your machine
 
 ## The challenge
@@ -40,6 +39,7 @@ We prepared the starter project for you that contains a database connection, CRU
 
 ### How to run:
 
+- copy `.env.development` file into `.env`
 - run `npm install` to install the dependencies
 - run `npm start` to build and start the project
 - run `npm run watch` to start and watch "src" folder

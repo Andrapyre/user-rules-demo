@@ -6,9 +6,12 @@ export const config = {
   NODE_ENV: process.env.NODE_ENV || "development",
   PORT: Number(process.env.PORT) || 3001,
   // DATABASE
+  DB_PROTOCOL: process.env.DB_PROTOCOL || "mongodb",
   DB_HOST: process.env.DB_HOST || "localhost",
   DB_PORT: process.env.DB_PORT || 27017,
   DB_DATABASE: process.env.DB_DATABASE || "workerbase",
+  DB_USER: process.env.DB_USER || "workerbase",
+  DB_PASSWORD: process.env.DB_PASSWORD,
   // MQTT
   MQTT_HOST: process.env.MQTT_HOST || "broker.mqttdashboard.com",
   MQTT_PORT: process.env.MQTT_PORT || 1883,

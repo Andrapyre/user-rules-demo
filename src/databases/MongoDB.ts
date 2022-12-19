@@ -1,14 +1,12 @@
-import mongoose, { ConnectOptions } from "mongoose";
+import mongoose from "mongoose";
 import { config } from "@config";
 import { Database } from "@interfaces/Database.interface";
 import { logger } from "@utils/logger";
-import { UserModel } from "@models/User.model";
 
-const { DB_HOST, DB_PORT, DB_DATABASE } = config;
+const { DB_PROTOCOL, DB_HOST, DB_PORT, DB_DATABASE, DB_USER, DB_PASSWORD } =
+  config;
 
 export class MongoDB implements Database {
-  private url = `mongodb://${DB_HOST}:${DB_PORT}/${DB_DATABASE}`;
-
   constructor() {
     mongoose.set("debug", false);
     mongoose.connection.on("connected", function (err) {
@@ -23,6 +21,13 @@ export class MongoDB implements Database {
     mongoose.connection.on("disconnected", () => {
       logger.info(`[MongoDB]: Disconnected`);
     });
+  }
+
+  get url() {
+    if (DB_PROTOCOL === "mongodb+srv") {
+      return `${DB_PROTOCOL}://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_DATABASE}?retryWrites=true&w=majority`;
+    }
+    return `${DB_PROTOCOL}://${DB_HOST}:${DB_PORT}/${DB_DATABASE}`;
   }
 
   public async connect(): Promise<void> {
